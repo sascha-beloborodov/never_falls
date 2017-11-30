@@ -1,0 +1,38 @@
+@layout('layouts.private')
+
+@section('title') 
+    <title>Your observable sites</title>
+@endsection
+
+@section('content')
+    <div class="row">
+        <h2>List of your sites</h2>
+        <a href="{{ route('showCreateSite') }}">Add new site</a>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>URL</th>
+                    <th>Last update</th>
+                    <th>Last response code</th>
+                    <th>Actions</th>
+                </tr>
+                @each(site in sites)
+                    <tr>
+                        <td>{{ site.name }}</td>
+                        <td>{{ site.url }}</td>
+                        <td>{{ site.last_check_time == 0 ? 'It is not updated yet' : formatDate(site.last_check_time) }}</td>
+                        <td>{{ site.last_check_code == 0 ? 'There no code yet' : site.last_check_code }}</td>
+                        <td>
+                            <a href="#edit">Edit</a>
+                            <a href="#edit">Delete</a>
+                            <a href="#edit">Show history</a>
+                        </td>
+                    </tr>
+                @endeach
+            </table>
+        </div>
+    </div>
+@endsection
