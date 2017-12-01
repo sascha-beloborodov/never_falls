@@ -43,6 +43,11 @@ Route
     .middleware('auth')
     .as('storeSite')
 
+Route
+    .get('sites/edit/:id', 'SiteController.edit')
+    .middleware('auth')
+    .as('showEditSite')
+
 // dashboard
 Route
     .on('dashboard')

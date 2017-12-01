@@ -1,7 +1,7 @@
 @layout('layouts.private') 
 
 @section('title')
-<title>Create new observable site</title>
+<title>Edit - {{site.name}}</title>
 @endsection 
 
 @section('content')
@@ -61,13 +61,13 @@
           </div>
           <div class="x_content">
 
-            <form class="form-horizontal form-label-left" novalidate action="{{ route('storeSite') }}" method="post">
+            <form class="form-horizontal form-label-left" novalidate action="/sites/update/{{site.id}}" method="post">
               {{csrfField()}}
               <p>For alternative validation library
                 <code>parsleyJS</code> check out in the
                 <a href="form.html">form page</a>
               </p>
-              <span class="section">Personal Info</span>
+              <span class="section">Editing - {{ site.name }}</span>
 
               <div class="item form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">Name
@@ -80,7 +80,7 @@
                     name="name"
                     placeholder="My yandex"
                     required="required"
-                    type="text" value="{{ old('name', '') }}">
+                    type="text" value="{{ site.name }}">
                     {{ elIf('<span>$self</span>', getErrorFor('name'), hasErrorFor('name')) }}
                 </div>
               </div>
@@ -92,7 +92,7 @@
                   <textarea 
                     id="description"
                     name="description"
-                    class="form-control col-md-7 col-xs-12">{{ old('description', '') }}</textarea>
+                    class="form-control col-md-7 col-xs-12">{{ site.description }}</textarea>
                 </div>
               </div>
 
@@ -107,7 +107,7 @@
                     name="url"
                     required="required"
                     placeholder="www.website.com"
-                    class="form-control col-md-7 col-xs-12" value="{{ old('url', '') }}">
+                    class="form-control col-md-7 col-xs-12" value="{{ site.url }}">
                     {{ elIf('<span>$self</span>', getErrorFor('url'), hasErrorFor('url')) }}
                 </div>
               </div>

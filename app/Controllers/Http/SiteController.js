@@ -21,6 +21,32 @@ class SiteController {
         return view.render('site.create')
     }
 
+    async edit( {params, view} ) {
+        const site = await Site.findOrFail(params.id)
+        return view.render('site.edit', { site })
+    }
+
+    async update( {params, auth, session, request, response} ) {
+        const rules = {
+            name: 'required|string|min:2',
+            url: 'required|string|min:2'
+        }
+        const validation = await validate(request.all(), rules)
+        if (validation.fails()) {
+            session
+                .withErrors(validation.messages())
+                .flashAll()
+            return response.redirect('sites/edit/' + params.id)
+        }
+        const site = await Site.findOrFail(params.id);
+        site.name = request.input('name')
+        site.url = request.input('url')
+        site.description = request.input('description')
+        await site.save()
+        session.flash({ message: 'Site is updated sucessfully' })
+        return response.redirect('/sites')
+    }
+
     async store( {auth, session, request, response} ) {
         const rules = {
             name: 'required|string|min:2',
